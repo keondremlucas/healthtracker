@@ -7,7 +7,7 @@ namespace ClassLib
     {
         public static void Query()
         {
-            using var connection = new SqliteConnection("Data Source=./data/health.db");
+            using var connection = new SqliteConnection("Data Source=./ClassLib/data/health.db");
             connection.Open();
             var command = connection.CreateCommand();
             command.CommandText = @"
