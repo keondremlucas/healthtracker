@@ -1,0 +1,1 @@
+INSERT INTO healthtracker (dates, weights, bmi, calories) VALUES ("09/27/2021", 160, 32, 2500);
