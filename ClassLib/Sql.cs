@@ -7,15 +7,15 @@ namespace ClassLib
     {
         public static void Query()
         {
-            using var connection =  new SqliteConnection("Data Source = ./data/health.db");
+            using var connection = new SqliteConnection("Data Source=./data/health.db");
             connection.Open();
             var command = connection.CreateCommand();
             command.CommandText = @"
             SELECT * 
             FROM healthtracker";
-            
+
             using var reader = command.ExecuteReader();
-            while(reader.Read())
+            while (reader.Read())
             {
                 var id = reader.GetInt32(0);
                 var dates = reader.GetString(1);
@@ -26,19 +26,19 @@ namespace ClassLib
                 Console.WriteLine($"Row: {id} - {dates} - {weights} - {bmi} - {calories}");
             }
         }
-        public static void Insert(string dates, int weights, int bmi, int calories)
+        public static void Insert(string dates, int weights, double bmi, int calories)
         {
-            using var connection =  new SqliteConnection("Data Source = ./data/health.db");
+            using var connection = new SqliteConnection("Data Source = ./data/health.db");
             connection.Open();
             var command = connection.CreateCommand();
-             command.CommandText = @"
+            command.CommandText = @"
             INSERT INTO healthtracker(dates, weights, bmi ,calories)
             VALUES($dates, $weights, $bmi ,$calories)
             ";
-            command.Parameters.AddWithValue("$dates",dates);
-            command.Parameters.AddWithValue("$weights",weights);
-            command.Parameters.AddWithValue("$bmi",bmi);
-            command.Parameters.AddWithValue("$calories",calories);
+            command.Parameters.AddWithValue("$dates", dates);
+            command.Parameters.AddWithValue("$weights", weights);
+            command.Parameters.AddWithValue("$bmi", bmi);
+            command.Parameters.AddWithValue("$calories", calories);
             using var reader = command.ExecuteReader();
             Console.WriteLine($"Added :{reader.HasRows}");
 
@@ -46,33 +46,33 @@ namespace ClassLib
 
         public static void Update(int id, string dates, int weights, int bmi, int calories)
         {
-            using var connection =  new SqliteConnection("Data Source = ./data/health.db");
+            using var connection = new SqliteConnection("Data Source = ./data/health.db");
             connection.Open();
             var command = connection.CreateCommand();
-             command.CommandText = @"
+            command.CommandText = @"
             UPDATE healthtracker
             SET id = $id , dates = $dates, weights = $weights, bmi = $bmi, calories = $calories
             WHERE id = $id
             ";
-            command.Parameters.AddWithValue("$id",id);
-            command.Parameters.AddWithValue("$dates",dates);
-            command.Parameters.AddWithValue("$weights",weights);
-            command.Parameters.AddWithValue("$bmi",bmi);
-            command.Parameters.AddWithValue("$calories",calories);
+            command.Parameters.AddWithValue("$id", id);
+            command.Parameters.AddWithValue("$dates", dates);
+            command.Parameters.AddWithValue("$weights", weights);
+            command.Parameters.AddWithValue("$bmi", bmi);
+            command.Parameters.AddWithValue("$calories", calories);
             using var reader = command.ExecuteReader();
             Console.WriteLine($"Updated :{reader.HasRows}");
         }
         public static void Delete(int id)
         {
-            using var connection =  new SqliteConnection("Data Source = ./data/health.db");
+            using var connection = new SqliteConnection("Data Source = ./data/health.db");
             connection.Open();
             var command = connection.CreateCommand();
-             command.CommandText = @"
+            command.CommandText = @"
             DELETE 
             FROM healthtracker
              WHERE id = $id;
             ";
-            command.Parameters.AddWithValue("$id",id);
+            command.Parameters.AddWithValue("$id", id);
             using var reader = command.ExecuteReader();
             Console.WriteLine($"Deleted :{reader.HasRows}");
 
